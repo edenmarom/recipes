@@ -1,0 +1,45 @@
+.row{
+    margin-top: 40px !important;
+}
+
+img{
+    height: 200px;
+}
+
+img:hover{
+   cursor: pointer;
+}
+
+button{
+    color: aqua !important;
+}
+
+.loading{
+    padding-top: 100px;
+}
+
+.recipe-login{
+    padding-top: 100px;
+}
+
+.backbutton{
+    padding-top: 30px;
+    padding-bottom: 50px;;
+}
+
+.logo {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.search-form{
+    padding: 50px 50px;
+}
+
+.search-btn{
+    margin-left: 20px
+}
+
+.search-input{
+    margin-left: 20px
+}
