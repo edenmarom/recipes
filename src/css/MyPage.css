@@ -1,0 +1,16 @@
+.allRecipes{
+    display: flex;
+    /* height: 700px; */
+    flex-wrap: wrap;
+
+}
+
+.oneRecipe{
+    margin:20px;
+    width:calc(20% - 40px);
+}
+
+.recipeImage{
+    width:100%;
+    height: fit-content;
+}
