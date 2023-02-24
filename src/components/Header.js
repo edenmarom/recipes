@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../images/logo.png';
 
 
 const Header = (props) => {
+
+  useEffect(()=>{
+    const links = document.getElementsByTagName("a")
+    for(let link of links){
+      if(window.location.href == link.href){
+        link.style.color = "CornflowerBlue"
+      }
+
+    }
+  } , [])
+
+
   return (
       <div className="Header">
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

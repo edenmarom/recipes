@@ -24,8 +24,24 @@ export default function AddRecipe(props) {
             alert("You need to fill all the fields")
             return;
         }
+
+        let result = await isImgUrl(recipe.image);
+        if(!result){
+            // alert("the image is not image")
+            recipe.image = "https://spoonacular.com/recipeImages/667707-312x231.jpg"
+        }
+        function isImgUrl(url) {
+            const img = new Image();
+            img.src = url;
+            return new Promise((resolve) => {
+                img.onerror = () => resolve(false);
+                img.onload = () => resolve(true);
+            });
+        }
+
+
         props.setRecipes([...props.myRecipes , recipe])
-        // TODO : send the recipe to the server
+        // TODO : send rhe recipe to the server
         const options = {
             method: 'POST',
             headers: {

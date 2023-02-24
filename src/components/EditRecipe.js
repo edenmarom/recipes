@@ -4,30 +4,25 @@ import '../css/AddRecipe.css'
 
 export default function EditRecipe(props) {
 
-    let firstRecipe = {
-        title: "",
-        image: "",
-        imageType: ""
-    }
-
-    const [recipe, setRecipe] = useState(firstRecipe);
+    const [recipe, setRecipe] = useState(props.recipe);
 
     function close(e) {
-        if (e.target.className == "popup") {
-            props.setAdd(false);
+        if (e.target.className === "popup") {
+            props.setEdit(false);
         }
     }
 
     async function addNew() {
         console.log(recipe)
-        if(recipe.title == "" || recipe.image == ""  || recipe.imageType == ""){
+        if(recipe.title === "" || recipe.image === ""  || recipe.imageType === ""){
             alert("You need to fill all the fields")
             return;
         }
-        props.setRecipes([...props.myRecipes , recipe])
+        let array = props.myRecipes.filter((recipe1)=>recipe1._id !== recipe._id)
+        props.setRecipes([...array , recipe]) //TODO CHENA - if recipe first switch between them
         // TODO : send rhe recipe to the server
         const options = {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json' ,
                 'Set-Cookie': 'token = 33'
@@ -35,10 +30,10 @@ export default function EditRecipe(props) {
             body: JSON.stringify(recipe)
         }
         try {
-            let result = await fetch(`http://localhost:3000/recipes`, options);
+            let result = await fetch(`http://localhost:3000/recipes/${props.recipe._id}`, options);
             result = await result.json();
             console.log(result);
-            props.setAdd(false)
+            props.setEdit(false)
         }
         catch (err){
             console.log(err)
@@ -50,7 +45,7 @@ export default function EditRecipe(props) {
         <div className='popup' onClick={(e) => close(e)}>
             <div className='app1'>
                 <div>
-                    <h2 className='h2'>Add Recipe</h2>
+                    <h2 className='h2'>Edit Recipe</h2>
                     {/* <form> */}
                     <div className='links'>
                         <div className='divLabel'>
