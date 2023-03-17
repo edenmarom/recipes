@@ -1,5 +1,7 @@
 # Recipes Website
 
+###  npm i --legacy-peer-deps
+
 ### `npm start`
 
 Runs the app in the development mode.<br />

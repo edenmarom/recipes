@@ -4,6 +4,9 @@ import Recipe from './Recipe';
 import loading from '../images/generating.gif';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { initUser, updateUserID } from "../Slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { initRecipes } from "../Slices/recipeSlice";
 
 let mock = [
   {
@@ -258,6 +261,10 @@ export default function Recipes() {
     searchValue: "",
     timeFilter: ""
   });
+  const dispatch = useDispatch();
+  const currentUserID = useSelector((state) => state.user.id);
+  const currentUser = useSelector((state) => state.user);
+  const recipesFromStore = useSelector((state) => state.recipes.recipeslist);
 
   useEffect(() => {
     if (recepiesDisplay.recipes === "") {
@@ -277,10 +284,14 @@ export default function Recipes() {
     // }).then(data => console.log(this.state.recipes))
 
     //using mock data and not real api data:
-
+    dispatch(initRecipes(formatRecipe(mock)));
     setRecepiesDisplay((previousState) => {
-      return { ...previousState, recipes: formatRecipe(mock) };
+      return { ...previousState, recipes: recipesFromStore };
     });
+
+    // TODO inituser example to be removed:
+    dispatch(initUser("22222"));
+    dispatch(updateUserID("33333"));
   };
 
   const formatRecipe = (recipes) => {
