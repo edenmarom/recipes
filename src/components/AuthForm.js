@@ -1,12 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 // import { useNavigate } from "react-router-dom";
 import classes from '../css/AuthForm.module.css';
+import AuthContext from '../store/AuthContext'
 
 const AuthForm = (props) => {
   // const navigate = useNavigate();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-
+  const authCtx = useContext (AuthContext); 
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
