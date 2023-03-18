@@ -2,6 +2,7 @@ import React, { useEffect, useState , useContext} from 'react';
 import logo from '../images/logo.png';
 import AuthContext from '../store/AuthContext'
 
+import { Link } from "react-router-dom";
 
 const Header = (props) => {
 
@@ -10,8 +11,8 @@ const Header = (props) => {
 
   useEffect(() => {
     const links = document.getElementsByTagName("a")
-    for (let link of links) {
-      if (window.location.href == link.href) {
+    for(let link of links){
+      if(window.location.href === link.href){
         link.style.color = "CornflowerBlue"
       }
 
@@ -42,12 +43,12 @@ const Header = (props) => {
   return (
     <div className="Header">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a className="navbar-brand " href="/">
+        <Link className="navbar-brand" to="">
           <img className="logo" src={logo} alt=""></img>
-        </a>
-        <a className="navbar-brand" href="/">
+        </Link>
+        <Link className="navbar-brand" to="">
           Recipes Website
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -63,24 +64,24 @@ const Header = (props) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <a className="nav-link" href="/recipes">
+              <Link className="nav-link" to="recipes">
                 Recipes
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/myPage">
+              <Link className="nav-link" to="myPage">
                 My Recipes
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/admin">
+              <Link className="nav-link" to="admin">
                 Admin
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/about">
+              <Link className="nav-link" to="about">
                 About
-              </a>
+              </Link>
             </li>
             {!props.isLogin && <li className="nav-item">
               <a className="nav-link" href="/login">

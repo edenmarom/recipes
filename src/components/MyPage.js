@@ -2,15 +2,18 @@ import React, { useState, useEffect } from "react";
 import '../css/MyPage.css';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-// import { mock } from './Recipes'
 import AddRecipe from "./AddRecipe";
 import EditRecipe from "./EditRecipe";
+import { useDispatch, useSelector } from "react-redux";
+import { initUser, updateUserID } from "../Slices/userSlice";
 
 export default function MyPage() {
     const [ myRecipes , setRecipes] = useState([]);
     const [add , setAdd] = useState(false)
     const [edit , setEdit] = useState(false)
     const [selectedEdit, setSelectedEdit] = useState(null)
+    const dispatch = useDispatch();
+    const currentUserID = useSelector((state) => state.user.id);
 
     async function getRecapies(){
         try {
@@ -23,6 +26,9 @@ export default function MyPage() {
             console.log(err)
             console.log("no");
         }
+
+        // TODO store example to be removed
+        dispatch(updateUserID("4444"));
     }
 
     useEffect(()=>{

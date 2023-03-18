@@ -1,7 +1,9 @@
 import axios from "axios";
+export const serverSocketAddress = "http://localhost:8080";
+export const serverAddress = "http://localhost:3000";
 
 export default axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: serverAddress,
   headers: {
     "Content-Type": "application/json",
     accept: '"*/*"',

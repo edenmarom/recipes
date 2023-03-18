@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import './css/App.css';
 import Header from './components/Header';
 import Main from './components/Main';
-// import Callback from './components/Callback';
 import Recipes from './components/Recipes';
 import Admin from "./components/Admin";
 import MyPage from './components/MyPage'
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 // import Auth from './Auth';
 import AuthForm from './components/AuthForm';
 import { auth } from "./components/Base";
@@ -14,11 +13,6 @@ import { auth } from "./components/Base";
 // const auth = new Auth()
 // var userDetailContext = React.createContext(null);   
 const logOutUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBvsP0fDH9aLU8VIGZrrj4ik75P8UmqFqs';
-
-
-
-
-
 
 
 
@@ -61,39 +55,36 @@ function App() {
 
   return (
     <div className="App">
+      <BrowserRouter>
       <Header isLogin={useDeatials.isLogin} logout={logout} />
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Main message="Welcome to our recipes website!" showbutton="true" />
+      
+        <Routes>
+          <Route path="/">
+            <Route
+              index
+              element={
+                <Main
+                  message="Welcome to our recipes website!"
+                  showbutton="true"
+                />
+              }
+            />
+            <Route
+              path="about"
+              element={
+                <Main message="Thank you for visiting us!" showbutton="false" />
+              }
+            />
+            <Route path="recipes" element={<Recipes showbutton="false" />} />
+            <Route path="admin" element={<Admin showbutton="false" />} />
+            <Route path="myPage" element={<MyPage />} />
+            <Route exact path="login" element={<AuthForm showbutton="false" setUserDetails={setUserDetails} />}>
+
           </Route>
-          <Route exact path="/about">
-            <Main message="Thank you for visiting us!" showbutton="false" />
           </Route>
-          {/* <Route exact path="/callback">
-          <Callback />
-      </Route> */}
-            {/* <Route exact path="/notfound">
-          <Main message="404 Page Not Found" showbutton="false"/>
-      </Route> */}
-            <Route exact path="/recipes">
-              <Recipes showbutton="false" />
-            </Route>
-            <Route exact path="/admin">
-              <Admin showbutton="false" />
-            </Route>
-          <Route exact path="/login">
-            <AuthForm showbutton="false" setUserDetails={setUserDetails} />
-          </Route>
-            <Route exact path="/myPage">
-              <MyPage/>
-            </Route>
-            {/* <Route exact path="/loginFailed">
-          <Main message="Login Failed. Try Again" showbutton="true" />
-      </Route> */}
-          </Switch>
-        </Router>
-      </div>
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
