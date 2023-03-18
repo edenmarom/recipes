@@ -1,13 +1,18 @@
 import React, { useState, useRef, useContext } from 'react';
-// import { useNavigate } from "react-router-dom";
-import classes from '../css/AuthForm.module.css';
 import AuthContext from '../store/AuthContext'
+// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import classes from '../css/AuthForm.module.css';
+
+
 
 const AuthForm = (props) => {
   // const navigate = useNavigate();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-  const authCtx = useContext (AuthContext); 
+  const navigate = useNavigate();
+  const authCtx = useContext (AuthContext);
+ 
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -61,11 +66,13 @@ const AuthForm = (props) => {
         }
       }).then((data) => {
         console.log('data => ', data);
+        authCtx.login (data.idToken);
         props.setUserDetails({
           name: data.email,
           isLogin: data.registered
         });
-        // navigate('/');
+        navigate('/');
+        // history.replace('/');
       }).catch(err => {
         alert(err.message);
       });

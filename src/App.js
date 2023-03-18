@@ -11,7 +11,7 @@ import AuthForm from './components/AuthForm';
 import { auth } from "./components/Base";
 
 // const auth = new Auth()
-// var userDetailContext = React.createContext(null);   
+var userDetailContext = React.createContext(null);   
 const logOutUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBvsP0fDH9aLU8VIGZrrj4ik75P8UmqFqs';
 
 
@@ -44,20 +44,11 @@ function App() {
       });
   }
 
-
-  var [useDeatials, setUserDetails] = useState({
-    name: "",
-    isLogin: false
-  });
-
-
-
-
   return (
     <div className="App">
       <BrowserRouter>
       <Header isLogin={useDeatials.isLogin} logout={logout} />
-      
+
         <Routes>
           <Route path="/">
             <Route
@@ -79,8 +70,7 @@ function App() {
             <Route path="admin" element={<Admin showbutton="false" />} />
             <Route path="myPage" element={<MyPage />} />
             <Route exact path="login" element={<AuthForm showbutton="false" setUserDetails={setUserDetails} />}>
-
-          </Route>
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
@@ -89,4 +79,3 @@ function App() {
 }
 
 export default App;
-//test
