@@ -9,7 +9,7 @@ import MyPage from './components/MyPage'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 // import Auth from './Auth';
 import AuthForm from './components/AuthForm';
-import { auth } from "./Base";
+import { auth } from "./components/Base";
 
 // const auth = new Auth()
 // var userDetailContext = React.createContext(null);   
