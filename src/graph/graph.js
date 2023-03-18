@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import CanvasJSReact from "../utils/canvasjs.react";
-var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 let dataPoints = [];
-const GraphHeder = "Recipes Per User";
+const GraphHeder = "Number Of Recipes Per User";
 
 class Graph extends Component {
   render() {
@@ -18,7 +17,6 @@ class Graph extends Component {
       data: [
         {
           type: "column",
-          xValueFormatString: "MMM YYYY",
           yValueFormatString: "#,##0.00",
           dataPoints: dataPoints,
         },
@@ -31,22 +29,28 @@ class Graph extends Component {
     );
   }
 
-  componentDidMount() {
-    // TODO Get DATA FROM SERVER
+  async componentDidMount() {
+    // TODO Get DATA FROM SERVER fetch - > (serverAddress + "/graph")
     var chart = this.chart;
-    fetch("https://canvasjs.com/data/gallery/react/nifty-stock-price.json")
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        for (var i = 0; i < data.length; i++) {
-          dataPoints.push({
-            x: new Date(data[i].x),
-            y: data[i].y,
-          });
-        }
-        chart.render();
-      });
+    try {
+      let result = await fetch(
+        "https://canvasjs.com/data/gallery/react/nifty-stock-price.json"
+      );
+      //TODO result = result.data
+      result = await result.json();
+      for (var i = 0; i < result.length; i++) {
+        dataPoints.push({
+          //TODO result[i].x ->  result[i]._id result[i].y ->  result[i].count
+          //TODO result[i].y ->  result[i].count
+          x: result[i].x,
+          y: result[i].y,
+        });
+      }
+      chart.render();
+    } catch (err) {
+      console.log("Could not fetch graph data.");
+      console.log("Error: " + err);
+    }
   }
 }
 

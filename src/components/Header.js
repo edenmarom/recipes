@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import logo from '../images/logo.png';
 import { Link } from "react-router-dom";
 
@@ -6,7 +6,7 @@ const Header = (props) => {
   useEffect(()=>{
     const links = document.getElementsByTagName("a")
     for(let link of links){
-      if(window.location.href == link.href){
+      if(window.location.href === link.href){
         link.style.color = "CornflowerBlue"
       }
 
