@@ -15,7 +15,7 @@ import { auth } from "./Base";
 // var userDetailContext = React.createContext(null);   
 const logOutUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBvsP0fDH9aLU8VIGZrrj4ik75P8UmqFqs';
 
-;
+
 
 
 
@@ -49,6 +49,15 @@ function App() {
         console.log('err.message =>', err.message);
       });
   }
+
+
+  var [useDeatials, setUserDetails] = useState({
+    name: "",
+    isLogin: false
+  });
+
+
+
 
   return (
     <div className="App">
