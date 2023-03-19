@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useContext} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import logo from '../images/logo.png';
 import AuthContext from '../store/AuthContext'
 import { Link } from "react-router-dom";
@@ -10,27 +10,27 @@ const Header = (props) => {
   const loggin = authCtx.isLoggedin;
   const handleLogout = () => {
     authCtx.logout();
-};
+  };
 
   useEffect(() => {
     const links = document.getElementsByTagName("a")
-    for(let link of links){
-      if(window.location.href === link.href){
+    for (let link of links) {
+      if (window.location.href === link.href) {
         link.style.color = "CornflowerBlue"
       }
 
     }
   }, [])
 
-// const clickLogOut = () =>{
-//   signOut(auth).then(() => {
-//     // 
-//     console.log('Sign-out successful.');
-//   }).catch((error) => {
-//     console.log('An error happened.')
-//   });
-  
-// }
+  // const clickLogOut = () =>{
+  //   signOut(auth).then(() => {
+  //     // 
+  //     console.log('Sign-out successful.');
+  //   }).catch((error) => {
+  //     console.log('An error happened.')
+  //   });
+
+  // }
 
   return (
     <div className="Header">
@@ -61,6 +61,11 @@ const Header = (props) => {
               </Link>
             </li>
             <li className="nav-item">
+              {loggin && <Link className="nav-link" to="UserProfile">
+                User Profile
+              </Link>}
+            </li>
+            <li className="nav-item">
               <Link className="nav-link" to="myPage">
                 My Recipes
               </Link>
@@ -75,24 +80,24 @@ const Header = (props) => {
                 About
               </Link>
             </li>
-            { !loggin && (
-          <li className="nav-item">
-            <Link className="nav-link" to='/login'>Login</Link>
-          </li>
-          )}
-          { loggin && (
-          <li className="nav-item">
-            <Link className="nav-link" to='/myPage'>My Recipes</Link>
-          </li>
-          )}
-          { loggin && (
-          <li className="nav-item">
-            <button onClick={handleLogout}>Logout</button>
-          </li>
-          )}
+            {!loggin && (
+              <li className="nav-item">
+                <Link className="nav-link" to='/login'>Login</Link>
+              </li>
+            )}
+            {loggin && (
+              <li className="nav-item">
+                <Link className="nav-link" to='/myPage'>My Recipes</Link>
+              </li>
+            )}
+            {loggin && (
+              <li className="nav-item">
+                <button onClick={handleLogout}>Logout</button>
+              </li>
+            )}
             {/* {!props.isLogin && <li className="nav-item"> */}
-              {/* TODO Change to link */}
-              {/* <a className="nav-link" href="/login">
+            {/* TODO Change to link */}
+            {/* <a className="nav-link" href="/login">
                 Login
               </a>
             </li>}
@@ -111,7 +116,7 @@ const Header = (props) => {
       </nav>
     </div>
   );
- 
+
 }
 
 export default Header;

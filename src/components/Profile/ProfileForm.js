@@ -1,7 +1,7 @@
-import { useContext, useRef } from 'react';
-import AuthContext from '../../store/auth-context';
-import classes from './ProfileForm.module.css';
+import React, { useContext, useRef } from 'react';
+import AuthContext from '../../store/AuthContext';
 import { useNavigate } from "react-router-dom";
+import '../../css/ProfileForm.css';
 
 const ProfileForm = () => {
 
@@ -9,25 +9,25 @@ const ProfileForm = () => {
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const submitHandler = event => { 
-    event.preventDefault(); 
+  const submitHandler = event => {
+    event.preventDefault();
 
     const enteredNewPassword = newPasswordInputRef.current.value;
 
     //add validation
 
-    fetch ('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBvsP0fDH9aLU8VIGZrrj4ik75P8UmqFqs', 
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        idToken: authCtx.token,
-        password: enteredNewPassword,
-        returnSecureToken: true
-      }),
-      headers: {
-        'content-type': 'application/json'
+    fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBvsP0fDH9aLU8VIGZrrj4ik75P8UmqFqs',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          idToken: authCtx.token,
+          password: enteredNewPassword,
+          returnSecureToken: true
+        }),
+        headers: {
+          'content-type': 'application/json'
+        }
       }
-    }
     ).then(res => {
       console.log("password changed");
       navigate('/');
@@ -35,15 +35,17 @@ const ProfileForm = () => {
   }
 
   return (
-    <form className={classes.form} onSubmit ={submitHandler}>
-      <div className={classes.control}>
+   <div className='ProfileForm'>
+    <form className='form' onSubmit={submitHandler}>
+      <div className='control'>
         <label htmlFor='new-password'>New Password</label>
-        <input type='password' id='new-password' ref={newPasswordInputRef}/>
+        <input type='password' id='new-password' ref={newPasswordInputRef} />
       </div>
-      <div className={classes.action}>
+      <div className='action'>
         <button>Change Password</button>
       </div>
     </form>
+    </div>  
   );
 }
 

@@ -1,9 +1,10 @@
+import React from 'react';
 import ProfileForm from './ProfileForm';
-import classes from './UserProfile.module.css';
+import '../../css/Recipes.css';
 
 const UserProfile = () => {
   return (
-    <section className={classes.profile}>
+    <section>
       <h1>Your User Profile</h1>
       <ProfileForm />
     </section>

@@ -5,10 +5,12 @@ import Main from './components/Main';
 import Recipes from './components/Recipes';
 import Admin from "./components/Admin";
 import MyPage from './components/MyPage'
+import UserProfile from './components/Profile/UserProfile'
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 // import Auth from './Auth';
 import AuthForm from './components/AuthForm';
 import { AuthContextProvider } from './store/AuthContext'
+
 
 // const auth = new Auth()
 var userDetailContext = React.createContext(null);   
@@ -70,6 +72,7 @@ function App() {
             <Route path="recipes" element={<Recipes showbutton="false" />} />
             <Route path="admin" element={<Admin showbutton="false" />} />
             <Route path="myPage" element={<MyPage />} />
+            {useDeatials.isLogin && <Route path="UserProfile" element={<UserProfile />} />}
             <Route exact path="login" element={<AuthForm showbutton="false" setUserDetails={setUserDetails} />}>
             </Route>
           </Route>

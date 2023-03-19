@@ -3,6 +3,8 @@ import AuthContext from '../store/AuthContext'
 // import { useHistory } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import classes from '../css/AuthForm.module.css';
+import {updateUserID} from '../Slices/userSlice';
+import { useDispatch } from "react-redux";
 
 
 
@@ -12,6 +14,8 @@ const AuthForm = (props) => {
   const passwordInputRef = useRef();
   const navigate = useNavigate();
   const authCtx = useContext (AuthContext);
+  const dispatch = useDispatch();
+  
  
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -67,6 +71,7 @@ const AuthForm = (props) => {
       }).then((data) => {
         console.log('data => ', data);
         authCtx.login (data.idToken);
+        dispatch(updateUserID(data.localId));
         props.setUserDetails({
           name: data.email,
           isLogin: data.registered
