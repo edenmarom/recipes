@@ -8,7 +8,7 @@ import MyPage from './components/MyPage'
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 // import Auth from './Auth';
 import AuthForm from './components/AuthForm';
-import { auth } from "./components/Base";
+import { AuthContextProvider } from './store/AuthContext'
 
 // const auth = new Auth()
 var userDetailContext = React.createContext(null);   
@@ -46,6 +46,7 @@ function App() {
 
   return (
     <div className="App">
+        <AuthContextProvider>
       <BrowserRouter>
       <Header isLogin={useDeatials.isLogin} logout={logout} />
 
@@ -74,6 +75,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      </AuthContextProvider>
     </div>
   );
 }

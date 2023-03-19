@@ -1,8 +1,6 @@
 import React, { useEffect, useState , useContext} from 'react';
 import logo from '../images/logo.png';
 import AuthContext from '../store/AuthContext'
-import {signOut} from 'firebase';
-import {auth} from './Base';
 import { Link } from "react-router-dom";
 
 
@@ -10,6 +8,9 @@ const Header = (props) => {
 
   const authCtx = useContext(AuthContext);
   const loggin = authCtx.isLoggedin;
+  const handleLogout = () => {
+    authCtx.logout();
+};
 
   useEffect(() => {
     const links = document.getElementsByTagName("a")
@@ -21,15 +22,15 @@ const Header = (props) => {
     }
   }, [])
 
-const clickLogOut = () =>{
-  signOut(auth).then(() => {
-    // 
-    console.log('Sign-out successful.');
-  }).catch((error) => {
-    console.log('An error happened.')
-  });
+// const clickLogOut = () =>{
+//   signOut(auth).then(() => {
+//     // 
+//     console.log('Sign-out successful.');
+//   }).catch((error) => {
+//     console.log('An error happened.')
+//   });
   
-}
+// }
 
   return (
     <div className="Header">
@@ -86,7 +87,7 @@ const clickLogOut = () =>{
           )}
           { loggin && (
           <li className="nav-item">
-            <button onClick={clickLogOut}>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
           </li>
           )}
             {/* {!props.isLogin && <li className="nav-item"> */}

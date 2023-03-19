@@ -12,7 +12,7 @@
 //     measurementId: "G-LZFJ9M2S13"
 // };
 
-export const auth = getAuth();
-export const db = getDatabase(app);
-const app = initializeApp(firebaseConfig);
-export default app;
+// export const auth = getAuth();
+// export const db = getDatabase(app);
+// const app = initializeApp(firebaseConfig);
+// export default app;
