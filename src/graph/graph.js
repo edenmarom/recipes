@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import CanvasJSReact from "../utils/canvasjs.react";
+import { serverAddress } from "../utils/http-communication";
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 let dataPoints = [];
+let UserCounter = 0;
 const GraphHeder = "Number Of Recipes Per User";
 
 class Graph extends Component {
@@ -17,7 +19,6 @@ class Graph extends Component {
       data: [
         {
           type: "column",
-          yValueFormatString: "#,##0.00",
           dataPoints: dataPoints,
         },
       ],
@@ -30,20 +31,17 @@ class Graph extends Component {
   }
 
   async componentDidMount() {
-    // TODO Get DATA FROM SERVER fetch - > (serverAddress + "/graph")
     var chart = this.chart;
     try {
-      let result = await fetch(
-        "https://canvasjs.com/data/gallery/react/nifty-stock-price.json"
-      );
-      //TODO result = result.data
+      let result = await fetch(serverAddress + "/graph");
       result = await result.json();
-      for (var i = 0; i < result.length; i++) {
+      UserCounter = 0;
+      dataPoints.splice(0, dataPoints.length);
+      for (var i = 0; i < result.data.length; i++) {
+        UserCounter++;
         dataPoints.push({
-          //TODO result[i].x ->  result[i]._id result[i].y ->  result[i].count
-          //TODO result[i].y ->  result[i].count
-          x: result[i].x,
-          y: result[i].y,
+          x: UserCounter,
+          y: result.data[i].count,
         });
       }
       chart.render();

@@ -60,7 +60,6 @@ const AuthForm = (props) => {
           });
         }
       }).then((data) => {
-        console.log('data => ', data);
         authCtx.login (data.idToken);
         dispatch(updateUserID(data.localId));
         props.setUserDetails({

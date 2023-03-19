@@ -64,9 +64,8 @@ export default function Recipes() {
   };
 
   const filterClicked = () => {
-    //TODO! check how longer recipies that are more than 1 hour preptime looks like...
     const results = recepiesDisplay.recipes.filter((recipe) => {
-      return +recipe.time.slice(0, -1) < +recepiesDisplay.timeFilter;
+      return +recipe.time < +recepiesDisplay.timeFilter;
     });
 
     setRecepiesDisplay((previousState) => {
