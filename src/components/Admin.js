@@ -7,8 +7,7 @@ import Graph from "../graph/graph.js";
 
 export default function Admin() {
   const [connectedUsers, setConnectedUsers] = useState(0);
-  //TODO Eden: change to a real user id from firebase
-  const AdminId = "4444";
+  const AdminId = "DY6e4W8aHFMfSMBcDbv3FDBgdEm2";
   const currentUserID = useSelector((state) => state.user.id);
 
   useEffect(() => {

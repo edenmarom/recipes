@@ -14,8 +14,6 @@ const ProfileForm = () => {
 
     const enteredNewPassword = newPasswordInputRef.current.value;
 
-    //add validation
-
     fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBvsP0fDH9aLU8VIGZrrj4ik75P8UmqFqs',
       {
         method: 'POST',
@@ -30,7 +28,7 @@ const ProfileForm = () => {
       }
     ).then(res => {
       console.log("password changed");
-      navigate('/');
+      navigate('/recipes');
     })
   }
 

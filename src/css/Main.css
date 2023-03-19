@@ -11,3 +11,7 @@
 .dev-header{
     font-weight: bolder;
 }
+
+.btn-main{
+    visibility: hidden;
+}

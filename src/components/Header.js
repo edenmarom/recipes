@@ -4,7 +4,7 @@ import AuthContext from '../store/AuthContext'
 import { Link } from "react-router-dom";
 
 
-const Header = (props) => {
+const Header = () => {
 
   const authCtx = useContext(AuthContext);
   const loggin = authCtx.isLoggedin;
@@ -22,15 +22,6 @@ const Header = (props) => {
     }
   }, [])
 
-  // const clickLogOut = () =>{
-  //   signOut(auth).then(() => {
-  //     // 
-  //     console.log('Sign-out successful.');
-  //   }).catch((error) => {
-  //     console.log('An error happened.')
-  //   });
-
-  // }
 
   return (
     <div className="Header">
@@ -66,11 +57,6 @@ const Header = (props) => {
               </Link>}
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="myPage">
-                My Recipes
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link className="nav-link" to="admin">
                 Admin
               </Link>
@@ -95,22 +81,6 @@ const Header = (props) => {
                 <button onClick={handleLogout}>Logout</button>
               </li>
             )}
-            {/* {!props.isLogin && <li className="nav-item"> */}
-            {/* TODO Change to link */}
-            {/* <a className="nav-link" href="/login">
-                Login
-              </a>
-            </li>}
-            {props.isLogin &&
-              <li className="nav-item">
-                <button
-                  className="nav-link btn btn-sm btn-primary"
-                  onClick={props.logout}
-                >
-                  Logout
-                </button>
-              </li>
-            } */}
           </ul>
         </div>
       </nav>

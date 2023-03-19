@@ -7,16 +7,11 @@ import Admin from "./components/Admin";
 import MyPage from './components/MyPage'
 import UserProfile from './components/Profile/UserProfile'
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-// import Auth from './Auth';
 import AuthForm from './components/AuthForm';
 import { AuthContextProvider } from './store/AuthContext'
 
-
-// const auth = new Auth()
 var userDetailContext = React.createContext(null);   
 const logOutUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBvsP0fDH9aLU8VIGZrrj4ik75P8UmqFqs';
-
-
 
 function App() {
 
@@ -24,7 +19,6 @@ function App() {
     name: "",
     isLogin: false
   });
-
 
   const logout = () => {
     fetch(logOutUrl,

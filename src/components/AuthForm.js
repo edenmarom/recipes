@@ -1,21 +1,16 @@
 import React, { useState, useRef, useContext } from 'react';
 import AuthContext from '../store/AuthContext'
-// import { useHistory } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import classes from '../css/AuthForm.module.css';
 import {updateUserID} from '../Slices/userSlice';
 import { useDispatch } from "react-redux";
 
-
-
 const AuthForm = (props) => {
-  // const navigate = useNavigate();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const navigate = useNavigate();
   const authCtx = useContext (AuthContext);
   const dispatch = useDispatch();
-  
  
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,8 +23,6 @@ const AuthForm = (props) => {
 
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
-
-    // optional add validation 
 
     setIsLoading(true);
 
@@ -58,12 +51,10 @@ const AuthForm = (props) => {
       }).then(res => {
         setIsLoading(false);
         if (res.ok) {
-          //console.log('res.json() => ', res.json());
           return res.json();
         } else {
           return res.json().then((data) => {
             let errorMessage = 'Auth failed';
-
 
             throw new Error(errorMessage);
           });
@@ -76,8 +67,7 @@ const AuthForm = (props) => {
           name: data.email,
           isLogin: data.registered
         });
-        navigate('/');
-        // history.replace('/');
+        navigate('/recipes');
       }).catch(err => {
         alert(err.message);
       });
