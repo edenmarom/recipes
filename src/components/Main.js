@@ -16,13 +16,11 @@ const Main = props => {
         ) : (
           <button
             type="button"
-            className="btn btn-primary btn-lg"
-            onClick={() => {
-              console.log("signin");
-              //TODO
-            }}
+            className="btn btn-primary btn-lg btn-main"
+            // onClick={() => {
+            //   console.log("signin");
+            // }}
           >
-            Sign In
           </button>
         )}
       </div>
