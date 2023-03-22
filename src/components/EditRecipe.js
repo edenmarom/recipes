@@ -14,7 +14,7 @@ export default function EditRecipe(props) {
 
     async function addNew() {
         console.log(recipe)
-        if(recipe.title === "" || recipe.image === ""  || recipe.imageType === ""){
+        if(recipe.title === "" || recipe.image === ""  || recipe.imageType === ""|| recipe.title == "" || recipe.image == ""  || recipe.imageType == "" ||recipe.includeIngredients == "" || recipe.maxReadyTime == "" || recipe.description == ""){
             alert("You need to fill all the fields")
             return;
         }
@@ -30,7 +30,7 @@ export default function EditRecipe(props) {
             body: JSON.stringify(recipe)
         }
         try {
-            let result = await fetch(`http://localhost:3000/recipes/${props.recipe._id}`, options);
+            let result = await fetch(`https://colman-recipe-backend.onrender.com/recipes/${props.recipe._id}`, options);
             result = await result.json();
             console.log(result);
             props.setEdit(false)
@@ -77,6 +77,38 @@ export default function EditRecipe(props) {
                                            event.persist();
                                            setRecipe(previousState => {
                                                return { ...previousState, imageType: event.target.value }
+                                           })
+                                       }} />
+                        </div>
+                        <div className='divLabel'>
+                            <TextField id="outlined-basic" label="includeIngredients" variant="outlined"
+                                       value={recipe.includeIngredients}
+                                       onChange={(event) => {
+                                           event.persist();
+                                           setRecipe(previousState => {
+                                               return { ...previousState, includeIngredients: event.target.value}
+                                           })
+                                       }} />
+
+                        </div>
+                        <div className='divLabel'>
+                            <TextField id="outlined-basic" label="maxReadyTime" variant="outlined"
+                                       value={recipe.maxReadyTime}
+                                       onChange={(event) => {
+                                           event.persist();
+                                           setRecipe(previousState => {
+                                               return { ...previousState, maxReadyTime: event.target.value }
+                                           })
+                                       }} />
+
+                        </div>
+                        <div className='divLabel'>
+                            <TextField id="outlined-basic" label="description" variant="outlined"
+                                       value={recipe.description}
+                                       onChange={(event) => {
+                                           event.persist();
+                                           setRecipe(previousState => {
+                                               return { ...previousState, description: event.target.value }
                                            })
                                        }} />
                         </div>
