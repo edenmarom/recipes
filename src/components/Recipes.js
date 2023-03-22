@@ -45,7 +45,8 @@ export default function Recipes() {
       let ingredients = recipe.includeIngredients
         .map((ingredient) => ingredient.name)
         .join(",");
-      let tempRecipe = { image, name, time, ingredients };
+      let description = recipe.description;
+      let tempRecipe = { image, name, time, ingredients, description };
       return tempRecipe;
     });
 

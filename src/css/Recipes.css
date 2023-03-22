@@ -3,7 +3,7 @@
 }
 
 img{
-    height: 200px;
+    height: 250px;
 }
 
 img:hover{
@@ -43,3 +43,4 @@ button{
 .search-input{
     margin-left: 20px
 }
+
