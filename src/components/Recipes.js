@@ -8,13 +8,17 @@ import { useDispatch } from "react-redux";
 import { initRecipes } from "../Slices/recipeSlice";
 import { serverAddress } from "../utils/http-communication";
 import Comment from './Comment';
+import CommetForm from './CommetForm';
+
+
 
 export default function Recipes() {
   const [comments, setComments] = useState({});
+  const [recipeIdCommentForm, setRecipeIdCommentForm] = useState(null);
   const [recepiesDisplay, setRecepiesDisplay] = useState({
     displayCategories: false,
     displayRecipes: true,
-    recipes: "",
+    recipes: [],
     searchValue: "",
     timeFilter: "",
   });
@@ -25,24 +29,39 @@ export default function Recipes() {
   }, []);
 
 
+  const addNewComment = e => {
+    const isCurrentIDClicked = parseInt(e.target.dataset.recipeid) === recipeIdCommentForm;
+    setRecipeIdCommentForm(!isCurrentIDClicked ? parseInt(e.target.dataset.recipeid) : null);
+  }
 
-  useEffect(() =>{
+  const approveComment = (recipeId , comment) =>{
+      const tempComments = comments[recipeId] ? comments[recipeId].slice() : [];
+      tempComments.push(comment);
+      setComments({
+        ...comments,
+        [recipeId]: tempComments
+      })
+  }
+
+  useEffect(() => {
     const recipes = recepiesDisplay.recipes;
-    const arrayOfIds = recipes.map(item => item.id);
+    const arrayOfIds = recipes.filter(item => item.id).map(item => item.id);
     const mapOfRecepies = {};
-    const promises = recipes.map(item => fetch(serverAddress + `/recipe-comments/${item.id}`));
+    const promises = arrayOfIds.map(item => fetch(serverAddress + `/recipe-comments/${item}`));
     Promise.all(promises)
-      .then(result =>{
-        result.forEach((item, idx) =>{
+      .then(array => {
+        return Promise.all(array.map(item => item.json()));
+      }).then(result => {
+        result.forEach((item, idx) => {
           const recepieID = arrayOfIds[idx];
-          mapOfRecepies[recepieID] = item;
+          mapOfRecepies[recepieID] = item?.data?.comments;
         });
         setComments(mapOfRecepies);
-      }).catch(error =>{
-           console.log('error getting comments.')
+      }).catch(error => {
+        console.log('error getting comments.')
       });
 
-  },[recepiesDisplay.recipes]);
+  }, [recepiesDisplay.recipes]);
 
   const loadData = async () => {
     try {
@@ -65,12 +84,13 @@ export default function Recipes() {
     let tempRecipes = recipes.map((recipe) => {
       let image = recipe.image;
       let name = recipe.title;
+      let id = recipe.id;
       let time = recipe.maxReadyTime;
       let ingredients = recipe.includeIngredients
         .map((ingredient) => ingredient.name)
         .join(",");
       let description = recipe.description;
-      let tempRecipe = { image, name, time, ingredients, description };
+      let tempRecipe = { id, image, name, time, ingredients, description };
       return tempRecipe;
     });
 
@@ -172,11 +192,17 @@ export default function Recipes() {
               </Button>
             </Form>
             {recepiesDisplay.recipes.map((recipe, id) => {
-              return (<div>
-                      <Recipe key={id} recipe={recipe} />
-                      {comments && comments[recipe.id] && <Comment data={comments[recipe.id]}/>}
-                      </div>
-                    );
+              return (<div key={id}>
+                <Recipe recipe={recipe} />
+
+
+                <div className="col-md-9">
+                  {comments && comments[recipe.id] && <Comment data={comments[recipe.id]} />}
+                  <button onClick={addNewComment} data-recipeId={recipe.id}>Add Comment</button>
+                  {recipeIdCommentForm === recipe.id && <CommetForm recipeId={recipe.id} approveComment={approveComment} />}
+                </div>
+              </div>
+              );
             })}
           </div>
         </div>

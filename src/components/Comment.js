@@ -2,11 +2,19 @@
 import React from 'react';
 // import './Comment.css';
 
-const Comment = (data) => {
+const Comment = ({data}) => {
+
+    if(!Array.isArray(data)){
+        return null;
+    }
+
     return(
-        <ol>
+        <div className="commentsWrapper">
+        <h4>Comments</h4>
+        <ul>
         {data.map((res,idx) => <li key={idx}>{res}</li>)} 
-       </ol>    
+       </ul>    
+       </div>
     )
 }
 
