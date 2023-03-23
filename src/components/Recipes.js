@@ -7,8 +7,10 @@ import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
 import { initRecipes } from "../Slices/recipeSlice";
 import { serverAddress } from "../utils/http-communication";
+import Comment from './Comment';
 
 export default function Recipes() {
+  const [comments, setComments] = useState({});
   const [recepiesDisplay, setRecepiesDisplay] = useState({
     displayCategories: false,
     displayRecipes: true,
@@ -22,6 +24,26 @@ export default function Recipes() {
     loadData();
   }, []);
 
+
+
+  useEffect(() =>{
+    const recipes = recepiesDisplay.recipes;
+    const arrayOfIds = recipes.map(item => item.id);
+    const mapOfRecepies = {};
+    const promises = recipes.map(item => fetch(serverAddress + `/recipe-comments/${item.id}`));
+    Promise.all(promises)
+      .then(result =>{
+        result.forEach((item, idx) =>{
+          const recepieID = arrayOfIds[idx];
+          mapOfRecepies[recepieID] = item;
+        });
+        setComments(mapOfRecepies);
+      }).catch(error =>{
+           console.log('error getting comments.')
+      });
+
+  },[recepiesDisplay.recipes]);
+
   const loadData = async () => {
     try {
       let result = await fetch(serverAddress + "/recipes");
@@ -31,6 +53,8 @@ export default function Recipes() {
       setRecepiesDisplay((previousState) => {
         return { ...previousState, recipes: formatedRecipes };
       });
+
+
     } catch (err) {
       console.log("Could not fetch recipes.");
       console.log("Error: " + err);
@@ -148,7 +172,11 @@ export default function Recipes() {
               </Button>
             </Form>
             {recepiesDisplay.recipes.map((recipe, id) => {
-              return <Recipe key={id} recipe={recipe} />;
+              return (<div>
+                      <Recipe key={id} recipe={recipe} />
+                      {comments && comments[recipe.id] && <Comment data={comments[recipe.id]}/>}
+                      </div>
+                    );
             })}
           </div>
         </div>
