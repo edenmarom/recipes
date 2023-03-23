@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import { serverSocketAddress } from "../utils/http-communication.js";
 import { useSelector } from "react-redux";
 import Graph from "../graph/graph.js";
+import CommentsGraph from "../graph/commentsGraph";
 
 export default function Admin() {
   const [connectedUsers, setConnectedUsers] = useState(0);
@@ -20,10 +21,14 @@ export default function Admin() {
         <div className="admin-container">
           <div className="connected-users-container">
             <h2 className="connected-users-title">Connected Users:</h2>
-            <p className="connected-users-number">{connectedUsers}</p>
+            <p className="connected-users-number">{connectedUsers -1}</p>
           </div>
           <div className="chart-container">
             <Graph></Graph>
+            <CommentsGraph></CommentsGraph>
+          </div>
+          <div>
+
           </div>
           <script src="/socket.io/socket.io.js"></script>
         </div>
