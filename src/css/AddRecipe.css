@@ -9,14 +9,17 @@
 
 .popup .app1{
     margin: 0 auto;
+    padding-bottom: 10px;
     width: 400px;
-    height: 370px;
+    height: fit-content;
     border: 1px solid rgb(46, 45, 45);
     background-color: #e7e7e8;
     position: fixed;
     top:calc(50% - 280px);
     left:calc(50% - 200px);
     direction:rtl;
+    overflow-y: scroll;
+    max-height: calc(100% - 300px)
 }
 
 
