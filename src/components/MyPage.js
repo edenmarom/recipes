@@ -4,19 +4,26 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import AddRecipe from "./AddRecipe";
 import EditRecipe from "./EditRecipe";
+import { useSelector } from "react-redux";
+import PopUpOneRecipe from "./PopUpOneRecipe";
+
 
 export default function MyPage() {
     const [ myRecipes , setRecipes] = useState([]);
     const [add , setAdd] = useState(false)
     const [edit , setEdit] = useState(false)
-    const [selectedEdit, setSelectedEdit] = useState(null)
+    const [description , setDescription] = useState(false);
+    const [chosenRecipe , setChosenRecipe] = useState(null)
+    const [selectedEdit, setSelectedEdit] = useState(null);
+    const currentUserID = useSelector((state) => state.user.id);
 
+    console.log(currentUserID)
     async function getRecapies(){
         try {
-            let result = await fetch(`http://localhost:3000/recipes`);
+            let result = await fetch(`https://colman-recipe-backend.onrender.com/recipes/${currentUserID}`);
             result = await result.json();
             console.log(result);
-            setRecipes(result.data)
+            setRecipes(result.data);
         }
         catch (err){
             console.log(err)
@@ -25,8 +32,6 @@ export default function MyPage() {
     }
 
     useEffect(()=>{
-        // setRecipes(mock)
-        // console.log(mock)
         getRecapies()
     },[])
 
@@ -43,7 +48,7 @@ export default function MyPage() {
                 'Set-Cookie': 'token = 33'
             }            }
         try {
-            let result = await fetch(`http://localhost:3000/recipes/${recipe1._id}`, options);
+            let result = await fetch(`https://colman-recipe-backend.onrender.com/recipes/${recipe1._id}`, options);
             result = await result.json();
             console.log(result);
         }
@@ -62,15 +67,19 @@ export default function MyPage() {
         setSelectedEdit(recipe1)
     }
 
+
+
     let recipesUi = myRecipes.map((recipe , index)=>{
         return (
-            <Card key={index} className="oneRecipe">
+            <Card key={index} className="oneRecipe" onClick={()=>{
+                setChosenRecipe(recipe);
+                setDescription(true)
+            }}>
                 <Card.Img variant="top" src={recipe.image} alt={recipe.title} className="recipeImage"/>
                 <Card.Body>
                     <Card.Title>{recipe.title}</Card.Title>
-                    {/* <Card.Text>
-                {recipe.description}
-                </Card.Text> */}
+                    <Card.Text>
+                    </Card.Text>
                     <Button variant="primary" style={{marginRight:"20px"}} onClick={()=>deleteRecipe(recipe , index)}>Delete</Button>
                     <Button variant="primary" onClick={()=>editRecipe(recipe , index)}>Edit</Button>
                 </Card.Body>
@@ -79,12 +88,14 @@ export default function MyPage() {
     })
     return (
         <div>
-            <Button variant="primary" onClick={()=>addRecipe()} style={{marginTop:"20px"}}>Add new recipe</Button>
+
+            {myRecipes ? <Button variant="primary" onClick={()=>addRecipe()} style={{marginTop:"20px"}}>Add new recipe</Button> : <></>}
             <div className="allRecipes">
                 {recipesUi}
             </div>
-            {add ? <AddRecipe setAdd={setAdd} setRecipes={setRecipes} myRecipes={myRecipes}/> : <></>}
+            {add  ? <AddRecipe setAdd={setAdd} setRecipes={setRecipes} myRecipes={myRecipes} /> : <></>}
             {edit ? <EditRecipe setEdit={setEdit} recipe={selectedEdit} setRecipes={setRecipes} myRecipes={myRecipes}/> : <></>}
+            {description ? <PopUpOneRecipe setDescription={setDescription} chosenRecipe={chosenRecipe}/> : <></>}
         </div>
     );
 }
